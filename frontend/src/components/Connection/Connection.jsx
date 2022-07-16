@@ -1,17 +1,21 @@
-import { useContext } from 'react';
-import XArrow from 'react-xarrows';
+import { useMemo } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Box } from '@mui/material';
 
 import {
-  useConnectionAnchors,
   useContextMenu,
   useGlobalRefMap,
   useDoubleTap,
   usePropertiesMenu,
 } from '../../hooks';
-import { ContextMenu, Label, PropertiesMenu } from '..';
-import { SchematicContext } from '../../contexts';
+import {
+  ConnectionSegment,
+  ContextMenu,
+  Label,
+  PropertiesMenu,
+  Vertex,
+} from '..';
 
 export function Connection({
   id,
@@ -21,64 +25,82 @@ export function Connection({
   properties,
   isSelected,
   schematicRef,
-  updatePosition,
-  ...rest
+  canvasRef,
+  selectedItems,
+  vertices,
 }) {
-  const refMap = useGlobalRefMap(id);
+  useGlobalRefMap(id);
 
   const contextMenu = useContextMenu();
   const propertiesMenu = usePropertiesMenu();
   const holdHandlers = useDoubleTap(contextMenu.open);
 
-  const schematic = useContext(SchematicContext);
-  const anchors = useConnectionAnchors(schematic, { start, end });
+  const segments = useMemo(() => {
+    if (!vertices.length) {
+      return [{ id: uuidv4(), start, end }];
+    }
+
+    const segments = [];
+    let prevVertex = { id: start };
+
+    vertices.forEach((vertex) => {
+      segments.push({
+        id: uuidv4(),
+        owner: id,
+        start: prevVertex.id,
+        end: vertex.id,
+      });
+
+      prevVertex = vertex;
+    });
+
+    segments.push({
+      id: uuidv4(),
+      owner: id,
+      start: vertices.at(-1).id,
+      end,
+    });
+
+    return segments;
+  }, [end, id, start, vertices]);
 
   return (
     <Box sx={{ pointerEvents: 'none' }}>
-      <XArrow
-        {...anchors}
-        {...properties}
-        dashness={
-          properties?.dashed
-            ? { animation: properties?.dashedAnimationSpeed }
-            : false
-        }
-        gridBreak={`${
-          properties?.dashedAnimationSpeed >= 0
-            ? properties?.gridBreak
-            : 100 - properties?.gridBreak
-        }%`}
-        start={
-          properties?.dashedAnimationSpeed >= 0
-            ? refMap.get(start)
-            : refMap.get(end)
-        }
-        end={
-          properties?.dashedAnimationSpeed >= 0
-            ? refMap.get(end)
-            : refMap.get(start)
-        }
-        path='grid'
-        showHead={false}
-        divContainerStyle={{
-          opacity: properties?.opacity ?? 1,
-          pointerEvents: 'none',
-          zIndex: -1,
-        }}
-        passProps={{
-          onContextMenu: contextMenu.open,
-          onDoubleClick: () => propertiesMenu.openTab(0),
-          ...holdHandlers,
-        }}
-        labels={
-          <Label
-            schematicRef={schematicRef}
-            onDoubleClick={() => propertiesMenu.openTab(1)}
-            {...label}
-          />
-        }
-        {...rest}
-      />
+      {vertices.map((vertex) => (
+        <Vertex
+          key={vertex.id}
+          onOpenProperties={() => propertiesMenu.openTab(0)}
+          properties={properties}
+          schematicRef={schematicRef}
+          isSelected={selectedItems.has(vertex.id)}
+          {...vertex}
+        />
+      ))}
+
+      {segments.map((segment, index) => (
+        <ConnectionSegment
+          {...segment}
+          canvasRef={canvasRef}
+          labels={
+            index === 0 ? (
+              <Label
+                schematicRef={schematicRef}
+                onDoubleClick={() => propertiesMenu.openTab(1)}
+                {...label}
+              />
+            ) : null
+          }
+          key={segment.id}
+          owner={id}
+          passProps={{
+            onContextMenu: contextMenu.open,
+            onDoubleClick: () => propertiesMenu.openTab(0),
+            ...holdHandlers,
+          }}
+          properties={properties}
+          segments={segments}
+        />
+      ))}
 
       <ContextMenu
         id={id}

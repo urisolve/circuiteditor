@@ -1,6 +1,6 @@
 import { useState, useMemo, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import lodash from 'lodash';
+import { cloneDeep, isFunction, lowerCase } from 'lodash';
 
 import { Comp } from '../Comp';
 import { SearchBar } from '../SearchBar';
@@ -29,11 +29,11 @@ export function CompLib({ controller, ...rest }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredLib = useMemo(() => {
-    const filtered = lodash.cloneDeep(library);
+    const filtered = cloneDeep(library);
 
     return filtered.filter((group) => {
       group.elements = group.elements.filter((item) =>
-        lodash.lowerCase(item.fullName).includes(searchQuery.toLowerCase()),
+        lowerCase(item.fullName).includes(searchQuery.toLowerCase()),
       );
 
       return !!group.elements.length;
@@ -62,9 +62,7 @@ export function CompLib({ controller, ...rest }) {
                 <AccordionDetails>
                   <Grid container>
                     {group.elements.map((element, idx) => {
-                      const comp = lodash.isFunction(element)
-                        ? element()
-                        : element;
+                      const comp = isFunction(element) ? element() : element;
 
                       return (
                         <Grid key={idx} xs={4} item>

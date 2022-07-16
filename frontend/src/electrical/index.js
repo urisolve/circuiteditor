@@ -4,7 +4,7 @@ import { Iac } from './Iac';
 import { Idc } from './Idc';
 import { IProbe } from './IProbe';
 import { L } from './L';
-import { Marker } from './Marker';
+import { Node } from './Node';
 import { R } from './R';
 import { Vac } from './Vac';
 import { Vdc } from './Vdc';
@@ -14,16 +14,16 @@ import { Z } from './Z';
 
 export const components = Object.freeze({
   C,
-  Iac,
-  Vac,
-  IProbe,
-  Idc,
-  Vdc,
   gnd,
+  Iac,
+  Idc,
+  IProbe,
   L,
-  Z,
+  Node,
   R,
+  Vac,
+  Vdc,
   VProbe,
   Wire,
-  Marker,
+  Z,
 });

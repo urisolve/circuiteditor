@@ -1,7 +1,6 @@
 export * from './useArea';
 export * from './useBoolean';
 export * from './useCollectionSort';
-export * from './useConnectionAnchors';
 export * from './useConnections';
 export * from './useContextMenu';
 export * from './useDoubleTap';

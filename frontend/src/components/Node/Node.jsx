@@ -19,11 +19,11 @@ import { DraggableType } from '../../enums';
 
 export function Node({
   id,
+  type,
   connections,
   position,
   label,
   properties,
-  updatePosition,
   isSelected,
   schematicRef,
   selectedItems,
@@ -62,27 +62,19 @@ export function Node({
       onStop={isDragging.off}
       position={position}
       selectedItems={selectedItems}
-      type={DraggableType.ITEM}
+      type={DraggableType.NODE}
       {...rest}
     >
       <ConnectionPoint
+        {...holdHandlers}
+        circular
         className='handle'
+        color={color}
         id={id}
         isDragging={isDragging.value}
-        {...holdHandlers}
         onContextMenu={contextMenu.open}
         onDoubleClick={() => propertiesMenu.openTab(0)}
-        sx={{
-          borderRadius: '50%',
-          pointerEvents: 'auto',
-          backgroundColor: color,
-
-          position: 'relative',
-          left: -properties?.radius,
-          top: -properties?.radius,
-          height: properties?.radius * 2,
-          width: properties?.radius * 2,
-        }}
+        radius={properties?.radius}
       />
 
       {!isDangling && label && (

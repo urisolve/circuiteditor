@@ -26,9 +26,10 @@ export const Wire = ({ x, y } = WIRE_DEFAULT_CENTER) => {
           dashedAnimationSpeed: constants.DEFAULT_DASHED_ANIMATION_SPEED,
           color: constants.DEFAULT_WIRE_COLOR,
           dashed: false,
-          gridBreak: constants.DEFAULT_GRID_BREAK,
           strokeWidth: constants.DEFAULT_STROKE_WIDTH,
+          vertexRadius: constants.DEFAULT_VERTEX_RADIUS,
         },
+        vertices: [],
       },
     ],
     nodes: [

@@ -1,4 +1,6 @@
 export const DraggableType = Object.freeze({
-  ITEM: 'item',
+  COMPONENT: 'component',
   LABEL: 'label',
+  NODE: 'node',
+  VERTEX: 'vertex',
 });

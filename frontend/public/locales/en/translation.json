@@ -91,7 +91,6 @@
       "dashedAnimationSpeed": "Dashed Animation Speed",
       "email": "Email",
       "firstName": "First Name",
-      "gridBreak": "Grid Break",
       "hide": "Hide",
       "id": "ID",
       "institution": "Institution",
@@ -102,7 +101,8 @@
       "password": "Password",
       "radius": "Radius",
       "value": "Value",
-      "strokeWidth": "Stroke Width"
+      "strokeWidth": "Stroke Width",
+      "vertexRadius": "Vertex Radius"
     },
     "message": {
       "password": {
@@ -136,7 +136,7 @@
       "dcVoltageSource": "DC Voltage Source",
       "ground": "Ground",
       "inductor": "Inductor",
-      "marker": "Marker",
+      "node": "Node",
       "reactance": "Reactance",
       "resistor": "Resistor",
       "voltmeter": "Voltmeter",

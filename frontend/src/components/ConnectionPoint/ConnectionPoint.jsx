@@ -3,7 +3,15 @@ import { Box } from '@mui/material';
 import { useGlobalRefMap } from '../../hooks';
 import { getDragHandleId } from '../../util';
 
-export function ConnectionPoint({ id, isDragging, sx, ...rest }) {
+export function ConnectionPoint({
+  circular,
+  color,
+  id,
+  isDragging,
+  radius,
+  sx,
+  ...rest
+}) {
   const refMap = useGlobalRefMap(id);
   const dragHandleId = getDragHandleId(id);
 
@@ -12,8 +20,16 @@ export function ConnectionPoint({ id, isDragging, sx, ...rest }) {
       {...rest}
       ref={refMap.get(dragHandleId)}
       sx={{
+        backgroundColor: color,
+        borderRadius: circular && '50%',
         cursor: isDragging ? 'grabbing' : 'grab',
-        position: 'absolute',
+        pointerEvents: 'auto',
+
+        position: 'relative',
+        left: -radius,
+        top: -radius,
+        width: radius * 2,
+        height: radius * 2,
         ...sx,
       }}
     >

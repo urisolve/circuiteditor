@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { Portal, Typography } from '@mui/material';
 
 import { DraggableComponent } from '..';
-import { useBoolean, useForceUpdate, useGlobalRefMap } from '../../hooks';
+import { useBoolean, useGlobalRefMap } from '../../hooks';
 import { formatLabel } from '../../util';
 import { DraggableType } from '../../enums';
 
@@ -12,7 +12,6 @@ export function Label({
   id,
   schematicRef,
   position,
-  updatePosition,
   name,
   value,
   unit,
@@ -37,8 +36,6 @@ export function Label({
 
     return formatLabel(labelArgs);
   }, [isNameHidden, isValueHidden, name, value, unit]);
-
-  useForceUpdate();
 
   return (
     <Portal container={schematicRef.current}>

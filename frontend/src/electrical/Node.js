@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import { constants } from '../constants';
 
-export const Marker = (position) => ({
-  type: 'Marker',
-  fullName: 'Marker',
+export const Node = (position) => ({
+  type: 'Node',
+  fullName: 'Node',
 
   components: [],
   connections: [],

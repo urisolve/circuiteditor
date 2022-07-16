@@ -3,7 +3,7 @@ import { components as comps } from '../../electrical';
 export const library = [
   {
     title: 'Connectors',
-    elements: [comps.gnd, comps.Marker, comps.Wire],
+    elements: [comps.gnd, comps.Node, comps.Wire],
   },
   {
     title: 'Passive',

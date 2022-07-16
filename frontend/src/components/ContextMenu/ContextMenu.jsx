@@ -16,7 +16,7 @@ export function ContextMenu({ id, isOpen, close, openProperties, position }) {
   const {
     data: schematic,
     deleteById,
-    rotateSelection,
+    editById,
     selection: { selectedItems },
   } = useContext(SchematicContext);
 
@@ -29,6 +29,20 @@ export function ContextMenu({ id, isOpen, close, openProperties, position }) {
     () => !!schematic.components.find((comp) => comp.id === id),
     [id, schematic],
   );
+
+  function rotateSelection(amount) {
+    editById(
+      selectedIds,
+      (elem) => ({
+        ...elem,
+        position: {
+          ...elem?.position,
+          angle: (elem.position.angle ?? 0) + amount,
+        },
+      }),
+      { save: true },
+    );
+  }
 
   const actionGroups = [
     {
@@ -56,14 +70,12 @@ export function ContextMenu({ id, isOpen, close, openProperties, position }) {
         {
           icon: <RotateLeftIcon />,
           name: 'Rotate Left',
-          onClick: () =>
-            rotateSelection(selectedIds, -constants.ROTATION_INCREMENT),
+          onClick: () => rotateSelection(-constants.ROTATION_INCREMENT),
         },
         {
           icon: <RotateRightIcon />,
           name: 'Rotate Right',
-          onClick: () =>
-            rotateSelection(selectedIds, +constants.ROTATION_INCREMENT),
+          onClick: () => rotateSelection(+constants.ROTATION_INCREMENT),
         },
       ],
     },

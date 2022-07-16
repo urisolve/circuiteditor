@@ -32,13 +32,12 @@ export function Port({
 
   return (
     <ConnectionPoint
+      circular
+      color={color}
       id={id}
+      radius={radius}
       sx={{
-        backgroundColor: color,
-        borderRadius: '50%',
-
-        height: radius * 2,
-        width: radius * 2,
+        position: 'absolute',
         left: realPos.x * bounds?.width - radius,
         top: realPos.y * bounds?.height - radius,
       }}

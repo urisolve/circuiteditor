@@ -20,21 +20,20 @@ export function useSchematic(initialSchematic = {}, maxHistoryLength = 20) {
   const tools = useSchematicTools(setSchematic, history);
 
   useSchematicParser(schematic, setSchematic);
-  const { items, itemsMap, labels } = useSchematicItems(schematic);
+  const items = useSchematicItems(schematic);
   const [selectedItems, setSelectedItems] = useState(new Set());
 
-  useConnections(schematic, setSchematic, items);
+  useConnections(schematic, setSchematic, items.items);
   const netlist = useNetlist(schematic);
 
-  const area = useArea(items);
+  const area = useArea(items.items);
 
   return {
     data: schematic,
-    items,
-    itemsMap,
-    labels,
 
+    ...items,
     ...tools,
+
     history,
     netlist,
     area,

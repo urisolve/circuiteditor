@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid'
-import lodash from 'lodash';
+import { cloneDeep, trimEnd } from 'lodash';
 
 import {
   generateUniqueName,
@@ -141,7 +141,7 @@ function generateNodesString(component, schematic) {
   }
 
   // Trim the last space and return
-  return lodash.trimEnd(nodeStr);
+  return trimEnd(nodeStr);
 }
 
 function generateValueString({ type, label: { value = '', unit = '' } }) {
@@ -183,7 +183,7 @@ const replacePatterns = (string, replaceMap) =>
 
 export function useNetlist(sch) {
   return useMemo(() => {
-    const schematic = lodash.cloneDeep(sch);
+    const schematic = cloneDeep(sch);
 
     condenseNodes(schematic);
     applyGround(schematic);

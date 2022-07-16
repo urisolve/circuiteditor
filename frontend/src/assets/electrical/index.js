@@ -1,29 +1,29 @@
-import R from './R.svg';
-import L from './L.svg';
 import C from './C.svg';
-import Z from './Z.svg';
 import gnd from './gnd.svg';
-import Vac from './Vac.svg';
-import Vdc from './Vdc.svg';
 import Iac from './Iac.svg';
 import Idc from './Idc.svg';
-import VProbe from './VProbe.svg';
 import IProbe from './IProbe.svg';
+import L from './L.svg';
+import Node from './Node.svg';
+import R from './R.svg';
+import Vac from './Vac.svg';
+import Vdc from './Vdc.svg';
+import VProbe from './VProbe.svg';
 import Wire from './Wire.svg';
-import Marker from './Marker.svg';
+import Z from './Z.svg';
 
 export const symbols = {
-  R,
-  L,
   C,
-  Z,
   gnd,
-  Vac,
-  Vdc,
   Iac,
   Idc,
-  VProbe,
   IProbe,
+  L,
+  Node,
+  R,
+  Vac,
+  Vdc,
+  VProbe,
   Wire,
-  Marker,
+  Z,
 };

@@ -19,12 +19,12 @@ export function ConnectionPropertiesForm({ form }) {
       <Slider
         control={form.control}
         inputProps={{
-          min: 0,
-          max: 100,
-          marks: [{ value: constants.DEFAULT_GRID_BREAK }],
+          min: 2,
+          max: 10,
+          marks: [{ value: constants.DEFAULT_STROKE_WIDTH }],
         }}
-        label={t('form.label.gridBreak')}
-        name='properties.gridBreak'
+        label={t('form.label.strokeWidth')}
+        name='properties.strokeWidth'
       />
 
       <Slider
@@ -32,10 +32,10 @@ export function ConnectionPropertiesForm({ form }) {
         inputProps={{
           min: 2,
           max: 10,
-          marks: [{ value: constants.DEFAULT_STROKE_WIDTH }],
+          marks: [{ value: constants.DEFAULT_VERTEX_RADIUS }],
         }}
-        label={t('form.label.strokeWidth')}
-        name='properties.strokeWidth'
+        label={t('form.label.vertexRadius')}
+        name='properties.vertexRadius'
       />
 
       <Slider

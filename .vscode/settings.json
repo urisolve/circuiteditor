@@ -17,9 +17,12 @@
     "terceirizados",
     "urisolve",
     "UUIDv4",
-    "xarrows"
+    "Xarrow",
+    "xarrows",
+    "Xwrapper"
   ],
   "i18n-ally.localesPaths": [
     "frontend/public/locales"
-  ]
+  ],
+  "workbench.colorTheme": "Atom One Dark"
 }

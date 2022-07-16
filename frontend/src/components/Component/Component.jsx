@@ -27,7 +27,6 @@ export function Component({
   properties,
   width,
   height,
-  updatePosition,
   isSelected,
   selectedItems,
   ...rest
@@ -47,7 +46,7 @@ export function Component({
       onStop={isDragging.off}
       position={position}
       selectedItems={selectedItems}
-      type={DraggableType.ITEM}
+      type={DraggableType.COMPONENT}
       {...rest}
     >
       <Avatar

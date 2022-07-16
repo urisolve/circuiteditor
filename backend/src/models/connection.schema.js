@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const labelSchema = require('./label.schema');
+const vertexSchema = require('./vertex.schema');
 
 const connectionSchema = new mongoose.Schema(
   {
@@ -13,9 +14,10 @@ const connectionSchema = new mongoose.Schema(
       color: String,
       dashed: Boolean,
       dashedAnimationSpeed: Number,
-      gridBreak: Number,
       strokeWidth: Number,
+      vertexRadius: Number,
     },
+    vertices: [vertexSchema],
   },
   { _id: false },
 );

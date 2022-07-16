@@ -4,8 +4,9 @@ import {
   useMemo,
   useLayoutEffect,
   useRef,
+  useContext,
 } from 'react';
-import lodash from 'lodash';
+import { concat, throttle } from 'lodash';
 import Vector from 'victor';
 
 import { Box } from '@mui/material';
@@ -13,28 +14,28 @@ import { Box } from '@mui/material';
 import { useBoolean, useGlobalRefMap } from '../../hooks';
 import { areasIntersect, getDragHandleId } from '../../util';
 import { constants } from '../../constants';
+import { SchematicContext } from '../../contexts';
 
 const DEFAULT_AREA = { left: 0, top: 0, width: 0, height: 0 };
 const MOUSE = Object.freeze({ NONE: 0, LEFT: 1, MIDDLE: 2, RIGHT: 3 });
 
-export function SelectionArea({
-  parentRef,
-  ignoreItems,
-  selectableItems,
-  setSelectedItems,
-  fps,
-  disabled,
-  ...rest
-}) {
+export function SelectionArea({ parentRef, setSelectedItems, ...rest }) {
+  const { items, labels, vertices } = useContext(SchematicContext);
   const refMap = useGlobalRefMap();
   const showArea = useBoolean(false);
 
   const parentArea = useRef(null);
-  const ignoreAreas = useRef([]);
-  const selectableAreas = useRef([]);
-
   const startPoint = useRef(new Vector());
   const selectionArea = useRef(DEFAULT_AREA);
+
+  const selectableAreas = useRef([]);
+  const selectableItems = useMemo(
+    () => concat(items, vertices),
+    [items, vertices],
+  );
+
+  const ignoreAreas = useRef([]);
+  const ignoreItems = useMemo(() => labels, [labels]);
 
   useLayoutEffect(() => {
     if (!parentRef.current) return;
@@ -72,7 +73,7 @@ export function SelectionArea({
 
   const onMouseMove = useMemo(
     () =>
-      lodash.throttle((event) => {
+      throttle((event) => {
         showArea.on();
 
         const endPoint = new Vector(
@@ -104,8 +105,8 @@ export function SelectionArea({
         });
 
         event.preventDefault();
-      }, 1000 / (fps ?? constants.SELECTION_FPS)),
-    [fps, showArea, setSelectedItems],
+      }, 1000 / constants.SELECTION_FPS),
+    [showArea, setSelectedItems],
   );
 
   const onMouseUp = useCallback(
@@ -122,7 +123,7 @@ export function SelectionArea({
 
   const onMouseDown = useCallback(
     (event) => {
-      if (disabled || event.which !== MOUSE.LEFT) return;
+      if (event.which !== MOUSE.LEFT) return;
       if (!event.ctrlKey) setSelectedItems(new Set());
 
       startPoint.current = new Vector(
@@ -165,7 +166,7 @@ export function SelectionArea({
 
       event.preventDefault();
     },
-    [disabled, setSelectedItems, parentRef, onMouseMove, onMouseUp],
+    [setSelectedItems, parentRef, onMouseMove, onMouseUp],
   );
 
   useEffect(() => {

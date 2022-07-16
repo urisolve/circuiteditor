@@ -91,7 +91,6 @@
       "dashedAnimationSpeed": "Velocidade da Animação do Tracejado",
       "email": "Email",
       "firstName": "Primeiro Nome",
-      "gridBreak": "Quebra da Grelha",
       "hide": "Esconder",
       "id": "ID",
       "institution": "Instituição",
@@ -102,7 +101,8 @@
       "password": "Senha",
       "radius": "Raio",
       "value": "Valor",
-      "strokeWidth": "Largura da Linha"
+      "strokeWidth": "Largura da Linha",
+      "vertexRadius": "Raio dos Vértices"
     },
     "message": {
       "password": {
@@ -136,7 +136,7 @@
       "dcVoltageSource": "Fonte de Tensão DC",
       "ground": "Massa",
       "inductor": "Bobina",
-      "marker": "Marcador",
+      "node": "Nó",
       "reactance": "Reactância",
       "resistor": "Resistência",
       "voltmeter": "Voltímetro",

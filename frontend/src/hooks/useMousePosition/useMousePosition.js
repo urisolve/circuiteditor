@@ -1,5 +1,5 @@
 import { useMemo, useEffect, useRef, useState } from 'react';
-import lodash from 'lodash';
+import { throttle } from 'lodash';
 
 export function useMousePosition(ref, fps = 30) {
   const [mousePosition, setMousePosition] = useState(null);
@@ -12,7 +12,7 @@ export function useMousePosition(ref, fps = 30) {
 
   const calcMousePosition = useMemo(
     () =>
-      lodash.throttle((event) => {
+      throttle((event) => {
         setMousePosition({
           x: Math.floor(event.pageX - area.current.left),
           y: Math.floor(event.pageY - area.current.top),
